@@ -30,13 +30,12 @@
         <p class="text-gray-700 mb-2">{{$course->course_name}}</p>
         <p class="text-gray-700 mb-2">{{$course->course_brief}}</p>
         <p class="text-lg font-semibold mb-6">Fees: {{$course->fees}}</p>
-        <!-- Form -->
+
         <form action="{{ route('student.confirm') }}" method="POST">
             @csrf
 
             <input type="hidden" name="student_id" id="student_id" class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $student->id }}" @readonly(true)>
             <input type="hidden" name="course_id" id="course_id" class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $course->id }}" @readonly(true)>
-            <!-- Name Input -->
             @if(!$changeCourse)
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700">Name</label>
@@ -47,7 +46,6 @@
                     @enderror
                 </div>
 
-                <!-- Email Input -->
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700">Email</label>
                     <input type="email" name="email" id="email"

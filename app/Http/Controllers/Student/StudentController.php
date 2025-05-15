@@ -107,13 +107,13 @@ class StudentController extends Controller
         }
     }
 
-public function thankYou(Request $request)
-{
-    $currentRegNo = $request->session()->get('NewRegisterNO');
-    $request->session()->put('OldRegisterNO', $currentRegNo);
-    session()->forget('changeCourse');
-    return view('student.success', compact('currentRegNo'));
-}
+    public function thankYou(Request $request)
+    {
+        $currentRegNo = $request->session()->get('NewRegisterNO');
+        $request->session()->put('OldRegisterNO', $currentRegNo);
+        session()->forget('changeCourse');
+        return view('student.success', compact('currentRegNo'));
+    }
 
 
 }
