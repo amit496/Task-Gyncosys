@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Http\Requests\Student\StudentRequest;
+use Illuminate\support\Session;
 
 class StudentController extends Controller
 {
@@ -19,6 +20,15 @@ class StudentController extends Controller
 
     public function storeStudentDetails(StudentRequest $request)
     {
+
+        if ($request->session()->has('OldRegisterNO')) {
+            $newRegNo = $request->session()->get('OldRegisterNO') + 1;
+        } else {
+            $newRegNo = 12490;
+        }
+
+        $request->session()->put('NewRegisterNO', $newRegNo);
+
         $course_id = $request->course_id;
 
         $student = new Student();
@@ -40,14 +50,19 @@ class StudentController extends Controller
 
     public function showCourseDetails($course_id)
     {
+        $changeCourse = '';
         $course = Course::findOrFail($course_id);
         $student = session()->get('student_data');
-        return view('student.course-details', compact('course', 'student'));
+        if(session()->get('changeCourse')){
+            $changeCourse = session()->get('changeCourse');
+        }
+        return view('student.course-details', compact('course', 'student', 'changeCourse'));
     }
 
     public function changeCourse()
     {
         $student = session()->get('student_data');
+        session()->put('changeCourse', 'Change');
         $courses = Course::all();
         return view('student.change-course', compact('courses','student'));
     }
@@ -92,9 +107,13 @@ class StudentController extends Controller
         }
     }
 
-    public function thankYou()
-    {
-        return view('student.success');
-    }
+public function thankYou(Request $request)
+{
+    $currentRegNo = $request->session()->get('NewRegisterNO');
+    $request->session()->put('OldRegisterNO', $currentRegNo);
+    session()->forget('changeCourse');
+    return view('student.success', compact('currentRegNo'));
+}
+
 
 }

@@ -30,7 +30,6 @@
         <p class="text-gray-700 mb-2">{{$course->course_name}}</p>
         <p class="text-gray-700 mb-2">{{$course->course_brief}}</p>
         <p class="text-lg font-semibold mb-6">Fees: {{$course->fees}}</p>
-
         <!-- Form -->
         <form action="{{ route('student.confirm') }}" method="POST">
             @csrf
@@ -38,24 +37,26 @@
             <input type="hidden" name="student_id" id="student_id" class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $student->id }}" @readonly(true)>
             <input type="hidden" name="course_id" id="course_id" class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $course->id }}" @readonly(true)>
             <!-- Name Input -->
-            <div class="mb-4">
-                <label for="name" class="block text-gray-700">Name</label>
-                <input type="text" name="name" id="name"
-                    class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $student->first_name .  ' ' . $student->last_name }}" @readonly(true)>
-                @error('name')
-                    <div class="text-red-600 text-sm mt-2">{{ $message }}</div>
-                @enderror
-            </div>
+            @if(!$changeCourse)
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700">Name</label>
+                    <input type="text" name="name" id="name"
+                        class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $student->first_name .  ' ' . $student->last_name }}" @readonly(true)>
+                    @error('name')
+                        <div class="text-red-600 text-sm mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <!-- Email Input -->
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700">Email</label>
-                <input type="email" name="email" id="email"
-                    class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $student->email }}" @readonly(true)>
-                @error('email')
-                    <div class="text-red-600 text-sm mt-2">{{ $message }}</div>
-                @enderror
-            </div>
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700">Email</label>
+                    <input type="email" name="email" id="email"
+                        class="w-full p-2 border border-gray-300 rounded mt-2" value="{{ $student->email }}" @readonly(true)>
+                    @error('email')
+                        <div class="text-red-600 text-sm mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+            @endif
 
             <div class="flex justify-between">
                 <a href="{{ route('student.changeCourse') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">🔄 Change Course</a>

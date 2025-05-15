@@ -9,7 +9,9 @@
 
   <div class="max-w-xl mx-auto bg-white shadow-md p-6 rounded mt-10 text-center">
     <h2 class="text-3xl font-bold text-green-600 mb-4">🎉 Enrollment Successful!</h2>
-    <p class="text-lg text-gray-700">Thank you for registering.<br>We have received your details and will contact you soon.</p>
+    <p class="text-lgtext-gray-700">Thank you for registering.<br>We have received your details and will contact you soon.</p>
+
+    <h2 class="text-3xl font-bold text-green-600 mb-4">{{$currentRegNo + 1}}</h2>
   </div>
 
 </body>
